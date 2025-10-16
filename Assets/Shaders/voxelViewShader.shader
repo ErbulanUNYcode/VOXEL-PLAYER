@@ -8,13 +8,13 @@ Shader "Unlit/VoxelView_UI_UV"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        Tags { "RenderType"="TransparentCutout" "Queue"="AlphaTest" }
         LOD 100
 
         Pass
         {
-            ZWrite Off
-            Blend SrcAlpha OneMinusSrcAlpha
+            ZWrite On
+            Blend Off
 
             CGPROGRAM
             #pragma vertex vert
@@ -73,10 +73,6 @@ Shader "Unlit/VoxelView_UI_UV"
                 float3 localToCam = mul(unity_WorldToObject, float4(worldToCam, 0.0)).xyz;
                 
                 float3 localPos = mul(unity_WorldToObject, float4(i.worldPos, 1.0)).xyz;
-                if (localPos.x != 0)
-                localToCam.x *= (i.uv-0.5).x/localPos.x;
-                if (localPos.y != 0)
-                localToCam.y *= (i.uv-0.5).y/localPos.y;
 
                 float3 pos = float3(i.uv, 0);
 
@@ -107,14 +103,13 @@ Shader "Unlit/VoxelView_UI_UV"
                 float currentZ = 0;
 
                 [loop]
-                for (int k = 0; k < max(vox.x,vox.y); k++)
+                for (int k = 0; k < vox.x+vox.y; k++)
                 {
                     if (current.x < 0 || current.x > vox.x - 1 ||
                         current.y < 0 || current.y > vox.y - 1)
                         break;
 
                     fixed4 col = tex2D(_MainTex, (current.xy + 0.5) / vox);
-                    col.a = (col.r + col.g + col.b) / 3;
 
                     if (col.a > 0.99 - currentZ)
                     {
@@ -144,7 +139,7 @@ Shader "Unlit/VoxelView_UI_UV"
                         return col;
                     }
                 }
-
+                clip(-1);
                 return fixed4(0,0,0,0);
             }
             ENDCG
