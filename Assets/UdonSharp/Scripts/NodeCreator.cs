@@ -1,16 +1,16 @@
 ﻿using UdonSharp;
-using UnityEngine;
 
 public class NodeCreator : UdonSharpBehaviour
 {
-	[SerializeField] private string[] inputs;
-	[SerializeField] private string[] outputs;
-	[SerializeField] private string[] parameters;
-	[SerializeField] private ParametersType[] parametersTypes;
-
+	public int id;
+	public string[] inputs;
+	public InputType[] inputsTypes;
+	public string[] outputs;
 }
-
-public enum ParametersType
+public enum InputType
 {
-	Float
+	Float,
+	Float2,
+	Float3,
+	Float4,
 }

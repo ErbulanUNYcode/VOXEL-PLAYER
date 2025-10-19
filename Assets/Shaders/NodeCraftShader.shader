@@ -48,7 +48,7 @@ Shader "Unlit/NodeCraft"
 			
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float4 datas[128];
+            float _Data[512];
 
             v2f vert (appdata v)
             {
@@ -60,8 +60,9 @@ Shader "Unlit/NodeCraft"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float2 d = (sin(i.uv*50)+1)/2;
-                fixed4 result = fixed4(d.x,d.y,0,(d.x+d.y)/2);
+                _Data[1] = _Data[0] + _Data[511];
+                float2 d = (sin(i.uv*50+float2(_Data[0],_Data[511]))+1)/2;
+                fixed4 result = fixed4(d.x,d.y,frac(_Data[1]),(d.x+d.y)/2);
 
 
 

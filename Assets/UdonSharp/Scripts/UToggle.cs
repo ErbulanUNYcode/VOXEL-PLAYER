@@ -5,6 +5,7 @@ public class UToggle : UdonSharpBehaviour
 {
 	[SerializeField] private bool _isOn;
 	[SerializeField] private GameObject[] objectsToOn;
+	[SerializeField] private GameObject[] objectsToOff;
 	[SerializeField] private UToggle[] togglesToOff;
 
 	private void Start()
@@ -18,9 +19,16 @@ public class UToggle : UdonSharpBehaviour
 		set
 		{
 			_isOn = value;
+
+
 			foreach (GameObject obj in objectsToOn)
 			{
-				if (obj != null) obj.SetActive(_isOn);
+				if (obj != null) obj.SetActive(value);
+			}
+
+			foreach (GameObject obj in objectsToOff)
+			{
+				if (obj != null) obj.SetActive(!value);
 			}
 
 			if (!_isOn)

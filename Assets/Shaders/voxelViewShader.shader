@@ -118,7 +118,7 @@ Shader "Unlit/VoxelView_UI_UV"
                         return col;
                     }
 
-                    if (tMax.x < tMax.y)
+                    /*if (tMax.x < tMax.y)
                     {
                         tMax.x += tDelta.x;
                         current.x += step.x;
@@ -131,7 +131,16 @@ Shader "Unlit/VoxelView_UI_UV"
                         current.y += step.y;
                         float delta = current.y - orig.y + (step.y < 0 ? 1 : 0);
                         currentZ = dirY * delta;
-                    }
+                    }*/
+
+                    //to ternary
+                    bool xStep = tMax.x < tMax.y;
+                    tMax += xStep ? float2(tDelta.x, 0) : float2(0, tDelta.y);
+                    current += xStep ? int2(step.x, 0) : int2(0, step.y);
+                    float delta = (xStep ? current.x - orig.x + (step.x < 0 ? 1 : 0)
+                                        : current.y - orig.y + (step.y < 0 ? 1 : 0));
+                    currentZ = (xStep ? dirX : dirY) * delta;
+
 
                     if (col.a > 0.99 - currentZ)
                     {
