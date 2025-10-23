@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Laser 1
-  m_Shader: {fileID: 4800000, guid: 3f13b42e90103ab42abc512a918c064c, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4f48bb147a7de584dbf56c173a58cfda, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
